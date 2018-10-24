@@ -4,9 +4,10 @@ const fs = require('fs')
 let pArray;
 let mArray;
 const allData = [];
+const HOST = 'http://api-sandbox.pillpack.com';
 
 const getPerscriptions = () => {
-  axios.get('http://api-sandbox.pillpack.com/prescriptions')
+  axios.get(`${HOST}/prescriptions`)
   .then((response)=>{
     if (response.status === 200) {
       pArray = response.data
@@ -21,7 +22,7 @@ const getPerscriptions = () => {
 }
 
 const getMedications = () => {
-  axios.get('http://api-sandbox.pillpack.com/medications')
+  axios.get(`${HOST}/medications`)
   .then((response)=>{
     if (response.status === 200) {
       mArray = response.data
