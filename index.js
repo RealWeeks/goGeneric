@@ -40,8 +40,8 @@ const sortPrescriptions = () => {
   for (let i = 0; i < pArray.length; i++) {
     let match = mArray.filter(x => x.id === pArray[i].medication_id)
     allData.push({prescription_id: pArray[i].id, medications: match})
-    // id of prescription, key
-    //  array of matching medications, value
+    // prescription_id => id of prescription
+    // medications => array of matching medications
   }
   filterInactiveandGeneric()
 }
@@ -60,7 +60,7 @@ const filterInactiveandGeneric = () => {
   testLogger(remainInactiveGeneric)
 }
 
-//show id of prescription && id of approp. generic
+//show id of prescription && approp. generic
 const testLogger = (data) => {
   fs.writeFile('output.json', JSON.stringify(data), errCallback);
 }
