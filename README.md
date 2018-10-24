@@ -7,19 +7,41 @@ Writes `output.json` in root directory.
 Formatted as such:
 
 ```
-[
-  { "prescription_id":"564aab7130323600032a0000",
-  "ActiveGeneric":[{
-    "id":"564aab6f30323600030c0000",
-    "ndc":"000000013","rxcui":"20100",
-    "description":"Ibuprofen 100MG",
-    "generic":true,
-    "active":true,
-    "created_at":"2015-11-17T04:22:08.001Z",
-    "updated_at":"2015-11-17T04:22:08.001Z"}]}
+[[
+  {
+    "prescription_id": "564aab7130323600032a0000",
+    "ActiveGeneric": [
+      {
+        "id": "564aab6f30323600030c0000",
+        "ndc": "000000013",
+        "rxcui": "20100",
+        "description": "Ibuprofen 100 MG",
+        "generic": true,
+        "active": true,
+        "created_at": "2015-11-17T04:22:08.001Z",
+        "updated_at": "2015-11-17T04:22:08.001Z"
+      }
+    ]
+  },
+  {
+    "prescription_id": "564aab7130323600032b0000",
+    "ActiveGeneric": [
+      {
+        "id": "564aab703032360003180000",
+        "ndc": "000000025",
+        "rxcui": "04010",
+        "description": "Bupropion 10 MG",
+        "generic": true,
+        "active": true,
+        "created_at": "2015-11-17T04:22:08.683Z",
+        "updated_at": "2015-11-17T04:22:08.683Z"
+      }
+    ]
+  },
 
-    ...
-  ]
+  ...
+  
+]
 ```
 
 ## Getting Started
