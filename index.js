@@ -16,7 +16,7 @@ const getPerscriptions = () => {
     }
   })
   .catch((err)=>{
-    console.log(err)
+    handlePromiseErr(err)
   })
 }
 
@@ -31,7 +31,7 @@ const getMedications = () => {
     }
   })
   .catch((err)=>{
-    console.log(err)
+    handlePromiseErr(err)
   })
 }
 
@@ -47,7 +47,7 @@ const sortPerscriptions = () => {
 
 const filterInactiveandGeneric = () => {
   let remainInactiveGeneric = []
-  for (var i = 0; i < allData.length; i++) {
+  for (let i = 0; i < allData.length; i++) {
     let isActiveGeneric = allData[i].medications.filter(x => x.active === true
                     && x.generic === true) // easy on the eyes
 
@@ -61,13 +61,16 @@ const filterInactiveandGeneric = () => {
 
 //show id of perscription && id of approp. generic
 const testLogger = (data) => {
-  debugger;
-  fs.writeFile('output.json', JSON.stringify(data), handleErr);
+  fs.writeFile('output.json', JSON.stringify(data), errCallback);
 }
 
-const handleErr = (err) =>{
+const errCallback = (err) => {
   if (err) throw err;
   console.log('done')
+}
+
+const handlePromiseErr = (err) => {
+  console.log(err)
 }
 
 getPerscriptions()
