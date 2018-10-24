@@ -6,7 +6,7 @@ let mArray;
 const allData = [];
 const HOST = 'http://api-sandbox.pillpack.com';
 
-const getPerscriptions = () => {
+const getPrescriptions = () => {
   axios.get(`${HOST}/prescriptions`)
   .then((response)=>{
     if (response.status === 200) {
@@ -26,7 +26,7 @@ const getMedications = () => {
   .then((response)=>{
     if (response.status === 200) {
       mArray = response.data
-      sortPerscriptions()
+      sortPrescriptions()
     }else{
       return Promise.reject(response)
     }
@@ -36,11 +36,11 @@ const getMedications = () => {
   })
 }
 
-const sortPerscriptions = () => {
+const sortPrescriptions = () => {
   for (let i = 0; i < pArray.length; i++) {
     let match = mArray.filter(x => x.id === pArray[i].medication_id)
-    allData.push({perscription_id: pArray[i].id, medications: match})
-    // id of perscription, key
+    allData.push({prescription_id: pArray[i].id, medications: match})
+    // id of prescription, key
     //  array of matching medications, value
   }
   filterInactiveandGeneric()
@@ -53,14 +53,14 @@ const filterInactiveandGeneric = () => {
                     && x.generic === true) // easy on the eyes
 
     if (isActiveGeneric.length) {
-      remainInactiveGeneric.push({perscription_id: allData[i].perscription_id, ActiveGeneric:isActiveGeneric})
+      remainInactiveGeneric.push({prescription_id: allData[i].prescription_id, ActiveGeneric:isActiveGeneric})
     }
   }
 
   testLogger(remainInactiveGeneric)
 }
 
-//show id of perscription && id of approp. generic
+//show id of prescription && id of approp. generic
 const testLogger = (data) => {
   fs.writeFile('output.json', JSON.stringify(data), errCallback);
 }
@@ -74,4 +74,4 @@ const handlePromiseErr = (err) => {
   console.log(err)
 }
 
-getPerscriptions()
+getPrescriptions()
