@@ -1,40 +1,30 @@
 const axios = require('axios')
 const fs = require('fs')
 
-let pArray
-let mArray
-const allData = []
+// let pArray
+// let mArray
+// const allData = []
 const HOST = 'http://api-sandbox.pillpack.com';
+// const singleSearch = process.argv[2];
 
-const getPrescriptions = () => {
-  axios.get(`${HOST}/prescriptions`)
-  .then((response)=>{
-    if (response.status === 200) {
-      pArray = response.data
-      getMedications()
-    }else{
-      return Promise.reject(response)
-    }
-  })
-  .catch((err)=>{
-    handlePromiseErr(err)
-  })
+
+// async function getData() {
+//
+// }
+
+async function getData() {
+  try {
+    let prescriptionsResponse = await axios.get(`${HOST}/prescriptions`);
+    let prescriptions = await medicationsResponse.data;
+    let medicationsResponse = await axios.get(`${HOST}/medications`);
+    let medications = await prescriptionsResponse.data;
+
+    console.log(medications);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-const getMedications = () => {
-  axios.get(`${HOST}/medications`)
-  .then((response)=>{
-    if (response.status === 200) {
-      mArray = response.data
-      sortPrescriptions()
-    }else{
-      return Promise.reject(response)
-    }
-  })
-  .catch((err)=>{
-    handlePromiseErr(err)
-  })
-}
 
 const sortPrescriptions = () => {
   for (let i = 0; i < pArray.length; i++) {
@@ -57,9 +47,15 @@ const filterInactiveandGeneric = () => {
     }
   }
 
+  if (singleSearch) {
+    showSingle(remainInactiveGeneric)
+  }
   testLogger(remainInactiveGeneric)
 }
 
+const showSingle = (remainInactiveGeneric) =>{
+
+}
 //show id of prescription && approp. generic
 const testLogger = (data) => {
   fs.writeFile('output.json', JSON.stringify(data), errCallback);
@@ -74,4 +70,5 @@ const handlePromiseErr = (err) => {
   if (err) throw err;
 }
 
-getPrescriptions()
+// getPrescriptions()
+getData()
