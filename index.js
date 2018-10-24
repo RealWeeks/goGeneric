@@ -1,9 +1,9 @@
 const axios = require('axios')
 const fs = require('fs')
 
-let pArray;
-let mArray;
-const allData = [];
+let pArray
+let mArray
+const allData = []
 const HOST = 'http://api-sandbox.pillpack.com';
 
 const getPrescriptions = () => {
@@ -71,7 +71,7 @@ const errCallback = (err) => {
 }
 
 const handlePromiseErr = (err) => {
-  console.log(err)
+  if (err) throw err;
 }
 
 getPrescriptions()
