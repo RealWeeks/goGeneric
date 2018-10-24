@@ -1,9 +1,6 @@
-const axios = require('axios')
-const fs = require('fs')
-
-const HOST = 'http://api-sandbox.pillpack.com';
-
 async function getData() {
+  const axios = require('axios')
+  const HOST = 'http://api-sandbox.pillpack.com';
   try {
     let prescriptionsResponse = await axios.get(`${HOST}/prescriptions`);
     let prescriptions = await prescriptionsResponse.data;
@@ -43,6 +40,7 @@ const filterInactiveandGeneric = (sortedPArray) => {
 
 //show id of prescription && approp. generic
 const writeToFile = (data) => {
+  const fs = require('fs')
   fs.writeFile('output.json', JSON.stringify(data), errCallback);
 }
 
