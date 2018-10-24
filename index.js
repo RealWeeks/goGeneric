@@ -1,4 +1,5 @@
-const axios = require('axios');
+const axios = require('axios')
+const fs = require('fs')
 
 let pArray;
 let mArray;
@@ -41,12 +42,32 @@ const sortPerscriptions = () => {
     // id of perscription, key
     //  array of matching medications, value
   }
-  testLogger()
+  filterInactiveandGeneric()
 }
 
+const filterInactiveandGeneric = () => {
+  let remainInactiveGeneric = []
+  for (var i = 0; i < allData.length; i++) {
+    let isActiveGeneric = allData[i].medications.filter(x => x.active === true
+                    && x.generic === true) // easy on the eyes
+
+    if (isActiveGeneric.length) {
+      remainInactiveGeneric.push({perscription_id: allData[i].perscription_id, ActiveGeneric:isActiveGeneric})
+    }
+  }
+
+  testLogger(remainInactiveGeneric)
+}
+
+//show id of perscription && id of approp. generic
 const testLogger = (data) => {
-  console.log(allData);
+  debugger;
+  fs.writeFile('output.json', JSON.stringify(data), handleErr);
 }
 
+const handleErr = (err) =>{
+  if (err) throw err;
+  console.log('done')
+}
 
 getPerscriptions()
