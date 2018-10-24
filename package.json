@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/RealWeeks/goGeneric/issues"
   },
-  "homepage": "https://github.com/RealWeeks/goGeneric#readme"
+  "homepage": "https://github.com/RealWeeks/goGeneric#readme",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
 }
