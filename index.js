@@ -15,8 +15,6 @@ async function getData() {
   }
 }
 
-
-
 const sortPrescriptions = ({prescriptions, medications}) => {
   let sortedPArray = []
   for (let i = 0; i < prescriptions.length; i++) {
@@ -50,10 +48,6 @@ const writeToFile = (data) => {
 const errCallback = (err) => {
   if (err) throw err;
   console.log('done')
-}
-
-const handlePromiseErr = (err) => {
-  if (err) throw err;
 }
 
 getData()
