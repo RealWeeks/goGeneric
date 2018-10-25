@@ -1,67 +1,47 @@
-const axios = require('axios')
 const fs = require('fs')
+const axios = require('axios')
+const HOST = 'http://api-sandbox.pillpack.com'
 
-let pArray
-let mArray
-const allData = []
-const HOST = 'http://api-sandbox.pillpack.com';
+async function getData() {
+  try {
+    let prescriptionsResponse = await axios.get(`${HOST}/prescriptions`);
+    let prescriptions = await prescriptionsResponse.data;
+    let medicationsResponse = await axios.get(`${HOST}/medications`);
+    let medications = await medicationsResponse.data;
 
-const getPrescriptions = () => {
-  axios.get(`${HOST}/prescriptions`)
-  .then((response)=>{
-    if (response.status === 200) {
-      pArray = response.data
-      getMedications()
-    }else{
-      return Promise.reject(response)
-    }
-  })
-  .catch((err)=>{
-    handlePromiseErr(err)
-  })
+    sortPrescriptions(prescriptions, medications)
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-const getMedications = () => {
-  axios.get(`${HOST}/medications`)
-  .then((response)=>{
-    if (response.status === 200) {
-      mArray = response.data
-      sortPrescriptions()
-    }else{
-      return Promise.reject(response)
-    }
-  })
-  .catch((err)=>{
-    handlePromiseErr(err)
-  })
-}
-
-const sortPrescriptions = () => {
-  for (let i = 0; i < pArray.length; i++) {
-    let match = mArray.filter(x => x.id === pArray[i].medication_id)
-    allData.push({prescription_id: pArray[i].id, medications: match})
+const sortPrescriptions = (prescriptions, medications) => {
+  let sortedPArray = []
+  for (let i = 0; i < prescriptions.length; i++) {
+    let match = medications.filter(x => x.id === prescriptions[i].medication_id)
+    sortedPArray.push({prescription_id: prescriptions[i].id, medications: match})
     // prescription_id => id of prescription
     // medications => array of matching medications
   }
-  filterInactiveandGeneric()
+  filterInactiveandGeneric(sortedPArray)
 }
 
-const filterInactiveandGeneric = () => {
+const filterInactiveandGeneric = (sortedPArray) => {
   let remainInactiveGeneric = []
-  for (let i = 0; i < allData.length; i++) {
-    let isActiveGeneric = allData[i].medications.filter(x => x.active === true
+  for (let i = 0; i < sortedPArray.length; i++) {
+    let isActiveGeneric = sortedPArray[i].medications.filter(x => x.active === true
                     && x.generic === true) // easy on the eyes
 
     if (isActiveGeneric.length) {
-      remainInactiveGeneric.push({prescription_id: allData[i].prescription_id, ActiveGeneric:isActiveGeneric})
+      remainInactiveGeneric.push({prescription_id: sortedPArray[i].prescription_id, ActiveGeneric:isActiveGeneric})
     }
   }
 
-  testLogger(remainInactiveGeneric)
+  writeToFile(remainInactiveGeneric)
 }
 
 //show id of prescription && approp. generic
-const testLogger = (data) => {
+const writeToFile = (data) => {
   fs.writeFile('output.json', JSON.stringify(data), errCallback);
 }
 
@@ -74,4 +54,4 @@ const handlePromiseErr = (err) => {
   if (err) throw err;
 }
 
-getPrescriptions()
+getData()
