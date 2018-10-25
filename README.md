@@ -4,6 +4,8 @@ A Node script for testing comparisons between medications and prescriptions.
 
 Writes `output.json` in root directory.
 
+Test with `npm test`.
+
 Formatted as such:
 
 ```
@@ -66,6 +68,12 @@ npm i
 
 ``` bash
 node index.js
+```
+
+## Testing
+
+``` bash
+npm test
 ```
 
 ## Built With
