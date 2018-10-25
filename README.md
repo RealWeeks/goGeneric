@@ -78,6 +78,8 @@ npm test
 
 ## Built With
 * [axios](https://github.com/axios/axios) - HTTP Client
+* [chai](https://www.chaijs.com/api/bdd/) - Assertion Library
+* [mocha](https://mochajs.org/) - Javascript Test Framework
 
 ## Contributing
 
