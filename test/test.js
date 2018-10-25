@@ -5,10 +5,10 @@ let prescriptions = require('./sampledata/prescriptions.json')
 let medications = require('./sampledata/medications.json')
 
 describe('checks sortPrescriptions', function () {
-  it('should return a value', function () {
+  it('should return an array', function () {
 
-    let value = sortPrescriptions()
-    expect(true).to.be(true);
+    let result = sortPrescriptions({prescriptions, medications})
+    expect(result).to.be.an('array');
 
   });
 });
