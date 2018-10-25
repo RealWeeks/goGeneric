@@ -9,13 +9,15 @@ async function getData() {
     let medicationsResponse = await axios.get(`${HOST}/medications`);
     let medications = await medicationsResponse.data;
 
-    sortPrescriptions(prescriptions, medications)
+    return { prescriptions, medications }
   } catch (err) {
     if (err) throw err;
   }
 }
 
-const sortPrescriptions = (prescriptions, medications) => {
+
+
+const sortPrescriptions = ({prescriptions, medications}) => {
   let sortedPArray = []
   for (let i = 0; i < prescriptions.length; i++) {
     let match = medications.filter(x => x.id === prescriptions[i].medication_id)
@@ -23,7 +25,7 @@ const sortPrescriptions = (prescriptions, medications) => {
     // prescription_id => id of prescription
     // medications => array of matching medications
   }
-  filterInactiveandGeneric(sortedPArray)
+  return sortedPArray
 }
 
 const filterInactiveandGeneric = (sortedPArray) => {
@@ -37,7 +39,7 @@ const filterInactiveandGeneric = (sortedPArray) => {
     }
   }
 
-  writeToFile(remainInactiveGeneric)
+  return remainInactiveGeneric
 }
 
 //show id of prescription && approp. generic
@@ -55,5 +57,8 @@ const handlePromiseErr = (err) => {
 }
 
 getData()
+.then(sortPrescriptions)
+.then(filterInactiveandGeneric)
+.then(writeToFile)
 
 module.exports = { sortPrescriptions, filterInactiveandGeneric }
