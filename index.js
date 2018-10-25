@@ -10,8 +10,8 @@ async function getData() {
     let medications = await medicationsResponse.data;
 
     sortPrescriptions(prescriptions, medications)
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    if (err) throw err;
   }
 }
 
