@@ -55,3 +55,5 @@ const handlePromiseErr = (err) => {
 }
 
 getData()
+
+module.exports = { sortPrescriptions, filterInactiveandGeneric }
